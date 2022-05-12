@@ -8,8 +8,9 @@ package main.Constants;
 public enum Files {
     LANG_FILE("LanguageDictionary.txt"),
     NUM_FILE("NumericDictionary.txt"),
+    TEMP_FILE("temp.txt"),
     DIRECTORY("C:");
-    String FileName;
+    final String FileName;
 
     Files(String FileName) {
         this.FileName = FileName;

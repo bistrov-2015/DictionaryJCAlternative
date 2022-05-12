@@ -11,8 +11,10 @@
 package main.Classes;
 
 import main.Constants.Files;
+import main.Constants.MessegesForUser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,74 +24,62 @@ public class CheckFunctions {
     String separator = File.separator;
     CommunicationWithTheUser communicationWithTheUser;
 
-    public CheckFunctions(CommunicationWithTheUser communicationWithTheUser) {
+    protected CheckFunctions(CommunicationWithTheUser communicationWithTheUser) {
         this.communicationWithTheUser = communicationWithTheUser;
     }
     public String getSeparator(){
         return separator;
     }
+    private String getDirectory(){
+        return Files.DIRECTORY.getFilesInfo() + getSeparator();
+    }
 
-    Path path1 = Paths.get(Files.DIRECTORY.getFilesInfo() + getSeparator() + Files.LANG_FILE.getFilesInfo());
-    Path path2 = Paths.get(Files.DIRECTORY.getFilesInfo() + getSeparator() + Files.NUM_FILE.getFilesInfo());
-    File file1 = new File(Files.DIRECTORY.getFilesInfo() + getSeparator() + Files.LANG_FILE.getFilesInfo());
-    File file2 = new File(Files.DIRECTORY.getFilesInfo() + getSeparator() + Files.NUM_FILE.getFilesInfo());
+    Path path1 = Paths.get(getDirectory() + Files.LANG_FILE.getFilesInfo());
+    Path path2 = Paths.get(getDirectory() + Files.NUM_FILE.getFilesInfo());
+    File file1 = new File(getDirectory() + Files.LANG_FILE.getFilesInfo());
+    File file2 = new File(getDirectory() + Files.NUM_FILE.getFilesInfo());
+
     public void checkFileExistence() {
         try {
             File file1 = new File(String.valueOf(path1));
             if (file1.createNewFile())
-                communicationWithTheUser.reportLanguageDictionaryFileCreation();
+                communicationWithTheUser.getMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
         } catch (IOException e) {
-            communicationWithTheUser.reportLanguageDictionaryFileCreationFailed();
+            communicationWithTheUser.getErrorMessege(MessegesForUser.ERROR.getMessege(), MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege());//reportLanguageDictionaryFileCreationFailed();
         }
         try {
             File file2 = new File(String.valueOf(path2));
             if (file2.createNewFile())
-                communicationWithTheUser.reportNumericDictionaryFileCreation();
+                communicationWithTheUser.getMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
 
         } catch (IOException e) {
-            communicationWithTheUser.reportNumericDictionaryFileCreationFailed();
+            communicationWithTheUser.getErrorMessege(MessegesForUser.ERROR.getMessege(), MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege());//reportNumericDictionaryFileCreationFailed();
         }
     }
 
     public boolean chekUserSelection(String userSelection){
         String regex = "[12345]";
-        if (Pattern.matches(regex, userSelection) == true){
-            return true;
-        }else return false;
+        return Pattern.matches(regex, userSelection);
     }
 
     public boolean checkDictionaryTypeSelection(String Dict){
         String regex = "[12]";
-        if (Pattern.matches(regex, Dict) == true){
-            return true;
-        } else return false;
+        return Pattern.matches(regex, Dict);
     }
 
     public boolean checkNumericString(String chekedStr) {
-        if (chekedStr.matches("^[0-9]+$") == true & chekedStr.length() == 5 ) {
-            return true;
-        }
-        return false;
+        return chekedStr.matches("^[0-9]+$") & chekedStr.length() == 5;
     }
 
     public boolean checkSymbolString(String chekedStr) {
-        if (chekedStr.matches("^[a-z]+$") == true & chekedStr.length() == 4 ) {// A-Z убрал чтобы был чувствителен к регистру
-            return true;
-        }
-        return false;
+        return chekedStr.matches("^[a-z]+$") & chekedStr.length() == 4;
     }
 
     public boolean checkSymbolExpressionValue(String chekedStr) {
-        if (chekedStr.matches("^[а-яА-Я]+$") == true ) {
-            return true;
-        }
-        return false;
+        return chekedStr.matches("^[а-яА-Я]+$");
     }
 
     public boolean checkNumericExpressionValue(String chekedStr) {
-        if (chekedStr.matches("^[0-9]+$") == true ) {
-            return true;
-        }
-        return false;
+        return chekedStr.matches("^[0-9]+$");
     }
 }
