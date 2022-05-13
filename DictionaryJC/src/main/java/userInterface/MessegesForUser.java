@@ -1,7 +1,7 @@
-/*
+/**
 * Данное перечесление содержит константы со строками для взаимодействия с пользователем.
 * */
-package main.Constants;
+package main.java.userInterface;
 
 public enum MessegesForUser {
     MAINMENU("Просмотреть словарь - нажмите 1; Найти запись - нажмите 2; Добавить запись - нажмите 3; Удалить запись - нажмите 4; Завершить работу программы - нажмите 5;"+ "\n"),
@@ -10,7 +10,7 @@ public enum MessegesForUser {
     REPORT_NUMERIC_DICTIONARY_FILE_CREATION("Файл NumericDictionary.txt не был найден, создан новый файл."),
     REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED("Не удалось создать файл NumericDictionary.txtпо пути (MyApplication/public class CheckFunctions/checkFileExistence)"),
     PROMPT_DICTIOARY_TYPE("Нажмите 1, чтобы выбрать Language Dictionary или 2, чтобы выбрать Numeric Dictionary " + "\n" + "<<"),
-    SHOW_STRING_FORMAT_FOR_EXPRESSION_MESSEGE("Введидите слово из 4 букв на латинской раскладке"),
+    SHOW_STRING_FORMAT_FOR_EXPRESSION_MESSEGE("Введидите слово из 4 букв на латинской раскладке, в нижнем регистре"),
     SHOW_NUMBER_FORMAT_FOR_EXPRESSION_MESSEGE("Введидите число из 5 цифр"),
     SHOW_STRING_FORMAT_FOR_VALUE_MESSEGE("Введидите слово на русском языке"),
     SHOW_NUMBER_FORMAT_FOR_VALUE_MESSEGE("Введидите число в двоичной или десятичной системе счисления"),

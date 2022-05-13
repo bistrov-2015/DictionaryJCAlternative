@@ -1,4 +1,7 @@
-package main.Constants;
+/**
+ * Данное перечисление содержит константы с пунктами, обозначающими определённое действие для главного меню.
+**/
+package main.java.userInterface;
 
 public enum MenuItems {
     SHOW_ALL("1"),

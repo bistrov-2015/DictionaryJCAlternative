@@ -1,17 +1,17 @@
-/*
+/**
  * класс реализует логику работы приложения имплементируя ApplicationInterface;
  * public void runApplication() - вызывает методы до тех пор пока переменная runAp = true;
  * public void showUserMenu() - метод реализует показ пользователю пунктов меню приложения;
  * public void  handleUserSelection() - метод реализует запрос действия от пользователя;
  * public void performSelectedAction() - метод обрабатывет выбор пользователя в зависимости от выбранного пункта меню;
  * */
-package main.Classes;
+package main.java.applicationLogic;
 
-import main.Constants.MenuItems;
-import main.Interfaces.ApplicationInterface;
-import main.Interfaces.DictionaryInterface;
-
-import java.io.IOException;
+import main.java.userInterface.MenuItems;
+import main.java.logicImplementation.DictionaryInterface;
+import main.java.userInterface.CommunicationWithTheUser;
+import main.java.logicImplementation.CheckFunctions;
+import main.java.logicImplementation.RequestFunctions;
 
 public class SimpleConsoleApplication implements ApplicationInterface {
     private String selectedItem;
@@ -21,7 +21,7 @@ public class SimpleConsoleApplication implements ApplicationInterface {
     private RequestFunctions requestFunctions;
     private boolean runAp;
 
-    protected SimpleConsoleApplication(DictionaryInterface simpleConsoleApplicationIOMethods, CommunicationWithTheUser communicationWithTheUser, CheckFunctions checkFunctions, RequestFunctions requestFunctions) {
+    public SimpleConsoleApplication(DictionaryInterface simpleConsoleApplicationIOMethods, CommunicationWithTheUser communicationWithTheUser, CheckFunctions checkFunctions, RequestFunctions requestFunctions) {
         this.simpleConsoleApplicationIOMethods = simpleConsoleApplicationIOMethods;
         this.communicationWithTheUser = communicationWithTheUser;
         this.checkFunctions = checkFunctions;
@@ -59,17 +59,9 @@ public class SimpleConsoleApplication implements ApplicationInterface {
 
     public void performSelectedAction(){
         if(selectedItem.equals(MenuItems.SHOW_ALL.getMenuItem())){
-            try {
                 simpleConsoleApplicationIOMethods.showDictionary();
-            } catch (IOException e) {
-                communicationWithTheUser.getExeptionMessege(main.Constants.MessegesForUser.FILE_READ_ERROR.getMessege(),e);
-            }
         } else if(selectedItem.equals(MenuItems.FIND.getMenuItem())){
-            try {
                 simpleConsoleApplicationIOMethods.findEntryInDictionary();
-            } catch (IOException e) {
-                communicationWithTheUser.getExeptionMessege(main.Constants.MessegesForUser.FILE_READ_ERROR.getMessege(),e);
-            }
         } else if(selectedItem.equals(MenuItems.ADD.getMenuItem())){
             simpleConsoleApplicationIOMethods.makeEntryInDictionary();
         } else if(selectedItem.equals(MenuItems.DELETE.getMenuItem())){

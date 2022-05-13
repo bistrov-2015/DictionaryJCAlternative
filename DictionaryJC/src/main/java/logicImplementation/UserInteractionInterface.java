@@ -1,4 +1,4 @@
-package main.Interfaces;
+package main.java.logicImplementation;
 
 public interface UserInteractionInterface {
     void showUserMenu();

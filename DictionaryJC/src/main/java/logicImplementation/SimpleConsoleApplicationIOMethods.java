@@ -1,4 +1,4 @@
-/*
+/**
  * класс реализует методы ввода/вывода:
  * public void showDictionary() - метод выводит в консоль выбранный пользователем словарь;
  * public File defineDictionaryType(String dictionaryType) - метод определят с каким файлом необходимо работать, взависимости от того какой словарь выбрал пользователь;
@@ -8,10 +8,10 @@
  * public boolean chekRowExistensBeforeDeleting(String searchString, File fileType) - метод проверяющий существование записи перед её удалением;
  * public void  deleteEntryInDictionary() - метод реализует удаление записи из словаря;
  * */
-package main.Classes;
+package main.java.logicImplementation;
 
-import main.Constants.MessegesForUser;
-import main.Interfaces.DictionaryInterface;
+import main.java.userInterface.MessegesForUser;
+import main.java.userInterface.CommunicationWithTheUser;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -24,39 +24,39 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
     private RequestFunctions requestFunctions;
     private CommunicationWithTheUser communicationWithTheUser;
 
-    protected SimpleConsoleApplicationIOMethods(CheckFunctions checkFunctions, RequestFunctions requestFunctions, CommunicationWithTheUser communicationWithTheUser) {
+    public SimpleConsoleApplicationIOMethods(CheckFunctions checkFunctions, RequestFunctions requestFunctions, CommunicationWithTheUser communicationWithTheUser) {
         this.checkFunctions = checkFunctions;
         this.requestFunctions = requestFunctions;
         this.communicationWithTheUser = communicationWithTheUser;
     }
 
-    public void showDictionary() throws IOException{
+    public void showDictionary(){
         String dictionariType = requestFunctions.promptDictionaryType();
         try(BufferedReader br = new BufferedReader(new FileReader(defineDictionaryType(dictionariType)))){
             String line;
             while ((line = br.readLine()) != null) {
-                communicationWithTheUser.getMessege(line);//System.out.println(line);// SRP?
+                communicationWithTheUser.showMessege(line);
             }
+        }catch (IOException e){
+            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
         }
     }
 
     public File defineDictionaryType(String dictionaryType){// переменнjq fileType присваивается значение взависимости от того какой словарь выбран
-        //File fileType;// = checkFunctions.file1;
         if("1".equals(dictionaryType)){
-            return checkFunctions.file1;//fileType = checkFunctions.file1;
-        } else return checkFunctions.file2;//fileType = checkFunctions.file2; //if("2".equals(dictionaryType))
+            return checkFunctions.getFileLangDict();
+        } else return checkFunctions.getFileNumDict();
     }
 
-    public Path definePathToFile(String numDict){// переменной path присваивается значение взависимости от того каой словарь выбран
-        //Path path = checkFunctions.path1;
+    private Path definePathToFile(String numDict){// переменной path присваивается значение взависимости от того каой словарь выбран
         if("1".equals(numDict)){
-            return checkFunctions.path1;//path = checkFunctions.path1;
-        } else return checkFunctions.path2;//path = checkFunctions.path2;//if("2".equals(numDict))
+            return checkFunctions.getPathToLangFile();
+        } else return checkFunctions.getPathToNumFile();
     }
 
-    public void  findEntryInDictionary() throws IOException{
-        String dictionariType = requestFunctions.promptDictionaryType();
-        File fileType = defineDictionaryType(dictionariType);
+    public void  findEntryInDictionary(){
+        String dictionaryType = requestFunctions.promptDictionaryType();
+        File fileType = defineDictionaryType(dictionaryType);
         String searchString = communicationWithTheUser.promptLine();
         String searchStringResult = null;
         try(BufferedReader br = new BufferedReader(new FileReader(fileType))){
@@ -67,8 +67,10 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
                 }
             }
             if(searchStringResult != null){
-                communicationWithTheUser.getMessege(searchStringResult);
-            } else communicationWithTheUser.getMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
+                communicationWithTheUser.showMessege(searchStringResult);
+            } else communicationWithTheUser.showMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
+        }catch (IOException e){
+            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
         }
     }
 
@@ -78,13 +80,13 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
         String numDict = requestFunctions.promptDictionaryType();
         Path pathToFile = definePathToFile(numDict);
         String expression = requestFunctions.requestExpressiont(numDict);
-        communicationWithTheUser.getMessege(MessegesForUser.REQUEST_VALUE.getMessege());//promptValue();
+        communicationWithTheUser.showMessege(MessegesForUser.REQUEST_VALUE.getMessege());
         String expressionValue = requestFunctions.requestExpressionValue(numDict);
         String checkedString = expression + "\t" + expressionValue;
         try {
             Files.writeString(pathToFile, "\n" + checkedString, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            communicationWithTheUser.getExeptionMessege(MessegesForUser.FILE_WRITING_ERROR.getMessege(),e);
+            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_WRITING_ERROR.getMessege(),e);
         }
     }
 
@@ -104,7 +106,7 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
         String dictionaryType = requestFunctions.promptDictionaryType();
         File fileType = defineDictionaryType(dictionaryType);
         Path path = definePathToFile(dictionaryType);
-        File temporaryFile = new File(main.Constants.Files.DIRECTORY.getFilesInfo() + checkFunctions.getSeparator() + main.Constants.Files.TEMP_FILE.getFilesInfo());
+        File temporaryFile = new File(main.java.logicImplementation.Files.DIRECTORY.getFilesInfo() + checkFunctions.getSeparator() + main.java.logicImplementation.Files.TEMP_FILE.getFilesInfo());
         String searchString = requestFunctions.requestExpressiont(dictionaryType);
         try{
             if(chekRowExistensBeforeDeleting(searchString,fileType)){
@@ -119,15 +121,15 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
                         }
                     }
                     if (Files.deleteIfExists(path)) {
-                        communicationWithTheUser.getMessege(MessegesForUser.DELETE_OK.getMessege());//deleteOKMessage();//System.out.println("delete");
-                    } else communicationWithTheUser.getErrorMessege(MessegesForUser.ERROR.getMessege(), MessegesForUser.DELETE_FAILED.getMessege());//deleteFailedMessage();//System.out.println("not delete");
+                        communicationWithTheUser.showMessege(MessegesForUser.DELETE_OK.getMessege());
+                    } else communicationWithTheUser.showErrorMessege(MessegesForUser.DELETE_FAILED.getMessege());
                     if (temporaryFile.renameTo(fileType)) {
-                        communicationWithTheUser.getMessege(MessegesForUser.RENAME_OK.getMessege());//renameOKMessage();//System.out.println("successfully");
-                    } else communicationWithTheUser.getErrorMessege(MessegesForUser.ERROR.getMessege(), MessegesForUser.RENAME_FAILED.getMessege());//renameFailedMessage();//System.out.println("not rename");
-                } else communicationWithTheUser.getErrorMessege(MessegesForUser.ERROR.getMessege(), MessegesForUser.STRING_NOT_FOUND.getMessege());//System.out.println("нет такой строки");
+                        communicationWithTheUser.showMessege(MessegesForUser.RENAME_OK.getMessege());
+                    } else communicationWithTheUser.showErrorMessege(MessegesForUser.RENAME_FAILED.getMessege());
+                } else communicationWithTheUser.showErrorMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
 
             }catch (IOException e){
-            communicationWithTheUser.getExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
+            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
         }
     }
 }
