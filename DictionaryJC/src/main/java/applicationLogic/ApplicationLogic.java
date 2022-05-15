@@ -7,18 +7,16 @@ import main.java.userInterface.MessegesForUser;
 import main.java.userInterface.CommunicationWithTheUser;
 
 public class ApplicationLogic {
-    private ApplicationInterface simpleConsoleApplication;
-    private CommunicationWithTheUser communicationWithTheUser;
-    public ApplicationLogic(ApplicationInterface simpleConsoleApplication, CommunicationWithTheUser communicationWithTheUser){
-        this.simpleConsoleApplication = simpleConsoleApplication;
-        this.communicationWithTheUser = communicationWithTheUser;
+    private BeanFactory beanFactory;
+    public ApplicationLogic(BeanFactory beanFactory){
+        this.beanFactory = beanFactory;
     }
     public void runApplication() {
 
         try {
-            simpleConsoleApplication.runApplication();
+            beanFactory.getSimpleConsoleApplication().runApplication();
         } catch (Exception e){
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.APPLICATION_LOGIC_EXEPTION.getMessege(),e);//applicationLogicExeption(e);
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.APPLICATION_LOGIC_EXEPTION.getMessege(),e);//applicationLogicExeption(e);
         }
 
     }

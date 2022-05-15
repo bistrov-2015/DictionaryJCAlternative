@@ -10,6 +10,7 @@
  * */
 package main.java.logicImplementation;
 
+import main.java.applicationLogic.BeanFactory;
 import main.java.userInterface.MessegesForUser;
 import main.java.userInterface.CommunicationWithTheUser;
 
@@ -18,32 +19,26 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class CheckFunctions {
+    private BeanFactory beanFactory;
 
-    private CommunicationWithTheUser communicationWithTheUser;
-    private FilesFactory filesFactory;
-
-    public CheckFunctions(CommunicationWithTheUser communicationWithTheUser, FilesFactory filesFactory) {
-        this.communicationWithTheUser = communicationWithTheUser;
-        this.filesFactory = filesFactory;
+    public CheckFunctions(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
-
-
-
     public void checkFileExistence() {
         try {
-            File langDictFile = new File(String.valueOf(filesFactory.getPathToLangFile()));
+            File langDictFile = new File(String.valueOf(beanFactory.getFilesFactory().getPathToLangFile()));
             if (langDictFile.createNewFile())
-                communicationWithTheUser.showMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
+                beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
         } catch (IOException e) {
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportLanguageDictionaryFileCreationFailed();
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportLanguageDictionaryFileCreationFailed();
         }
         try {
-            File numDictFile = new File(String.valueOf(filesFactory.getPathToNumFile()));
+            File numDictFile = new File(String.valueOf(beanFactory.getFilesFactory().getPathToNumFile()));
             if (numDictFile.createNewFile())
-                communicationWithTheUser.showMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
+                beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
 
         } catch (IOException e) {
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportNumericDictionaryFileCreationFailed();
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportNumericDictionaryFileCreationFailed();
         }
     }
 

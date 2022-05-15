@@ -15,17 +15,11 @@ import main.java.logicImplementation.RequestFunctions;
 
 public class SimpleConsoleApplication implements ApplicationInterface {
     private String selectedItem;
-    private DictionaryInterface simpleConsoleApplicationIOMethods;
-    private CommunicationWithTheUser communicationWithTheUser;
-    private CheckFunctions checkFunctions;
-    private RequestFunctions requestFunctions;
+    private BeanFactory beanFactory;
     private boolean runAp;
 
-    public SimpleConsoleApplication(DictionaryInterface simpleConsoleApplicationIOMethods, CommunicationWithTheUser communicationWithTheUser, CheckFunctions checkFunctions, RequestFunctions requestFunctions) {
-        this.simpleConsoleApplicationIOMethods = simpleConsoleApplicationIOMethods;
-        this.communicationWithTheUser = communicationWithTheUser;
-        this.checkFunctions = checkFunctions;
-        this.requestFunctions = requestFunctions;
+    public SimpleConsoleApplication(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
 
     public void setSelectedItem(String selectedItem) {
@@ -40,7 +34,7 @@ public class SimpleConsoleApplication implements ApplicationInterface {
 
 
     public void runApplication(){
-        checkFunctions.checkFileExistence();
+        beanFactory.getCheckFunctions().checkFileExistence();
         setRunUp(true);
         while (getRunAp()) {
             showUserMenu();
@@ -50,22 +44,22 @@ public class SimpleConsoleApplication implements ApplicationInterface {
     }
 
     public void showUserMenu(){
-        communicationWithTheUser.showMenu();
+        beanFactory.getCommunicationWithTheUser().showMenu();
     }
 
     public void  handleUserSelection(){
-        setSelectedItem(requestFunctions.promptUserSelection());
+        setSelectedItem(beanFactory.getRequestFunctions().promptUserSelection());
     }
 
     public void performSelectedAction(){
         if(selectedItem.equals(MenuItems.SHOW_ALL.getMenuItem())){
-                simpleConsoleApplicationIOMethods.showDictionary();
+                beanFactory.getSimpleConsoleApplicationIOMethods().showDictionary();
         } else if(selectedItem.equals(MenuItems.FIND.getMenuItem())){
-                simpleConsoleApplicationIOMethods.findEntryInDictionary();
+                beanFactory.getSimpleConsoleApplicationIOMethods().findEntryInDictionary();
         } else if(selectedItem.equals(MenuItems.ADD.getMenuItem())){
-            simpleConsoleApplicationIOMethods.makeEntryInDictionary();
+                beanFactory.getSimpleConsoleApplicationIOMethods().makeEntryInDictionary();
         } else if(selectedItem.equals(MenuItems.DELETE.getMenuItem())){
-            simpleConsoleApplicationIOMethods.deleteEntryInDictionary();
+                beanFactory.getSimpleConsoleApplicationIOMethods().deleteEntryInDictionary();
         } else if (selectedItem.equals(MenuItems.EXIT.getMenuItem())){
             setRunUp(false);
         }

@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         BeanFactory beanFactory = new BeanFactory();
-        beanFactory.createObjects();
+        beanFactory.createObjects(beanFactory);
         beanFactory.start();
     }
 }

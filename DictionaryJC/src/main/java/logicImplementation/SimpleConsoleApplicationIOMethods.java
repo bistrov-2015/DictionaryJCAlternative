@@ -10,6 +10,7 @@
  * */
 package main.java.logicImplementation;
 
+import main.java.applicationLogic.BeanFactory;
 import main.java.userInterface.MessegesForUser;
 import main.java.userInterface.CommunicationWithTheUser;
 
@@ -20,49 +21,40 @@ import java.nio.file.StandardOpenOption;
 
 
 public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
-    private CheckFunctions checkFunctions;
-    private RequestFunctions requestFunctions;
-    private CommunicationWithTheUser communicationWithTheUser;
-    private FilesFactory filesFactory;
+    private BeanFactory beanFactory;
 
-    public SimpleConsoleApplicationIOMethods(CheckFunctions checkFunctions,
-                                             RequestFunctions requestFunctions,
-                                             CommunicationWithTheUser communicationWithTheUser,
-                                             FilesFactory filesFactory) {
-        this.checkFunctions = checkFunctions;
-        this.requestFunctions = requestFunctions;
-        this.communicationWithTheUser = communicationWithTheUser;
-        this.filesFactory = filesFactory;
+    public SimpleConsoleApplicationIOMethods(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
 
     public void showDictionary(){
-        String dictionariType = requestFunctions.promptDictionaryType();
+        String dictionariType = beanFactory.getRequestFunctions().promptDictionaryType();
         try(BufferedReader br = new BufferedReader(new FileReader(defineDictionaryType(dictionariType)))){
             String line;
             while ((line = br.readLine()) != null) {
-                communicationWithTheUser.showMessege(line);
+                beanFactory.getCommunicationWithTheUser().showMessege(line);
             }
-        }catch (IOException e){
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
+        } catch (IOException e){
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
         }
     }
 
     public File defineDictionaryType(String dictionaryType){// переменнjq fileType присваивается значение взависимости от того какой словарь выбран
         if("1".equals(dictionaryType)){
-            return filesFactory.getFileLangDict();
-        } else return filesFactory.getFileNumDict();
+            return beanFactory.getFilesFactory().getFileLangDict();
+        } else return beanFactory.getFilesFactory().getFileNumDict();
     }
 
     private Path definePathToFile(String numDict){// переменной path присваивается значение взависимости от того каой словарь выбран
         if("1".equals(numDict)){
-            return filesFactory.getPathToLangFile();
-        } else return filesFactory.getPathToNumFile();
+            return beanFactory.getFilesFactory().getPathToLangFile();
+        } else return beanFactory.getFilesFactory().getPathToNumFile();
     }
 
     public void  findEntryInDictionary(){
-        String dictionaryType = requestFunctions.promptDictionaryType();
+        String dictionaryType = beanFactory.getRequestFunctions().promptDictionaryType();
         File fileType = defineDictionaryType(dictionaryType);
-        String searchString = communicationWithTheUser.promptLine();
+        String searchString = beanFactory.getCommunicationWithTheUser().promptLine();
         String searchStringResult = null;
         try(BufferedReader br = new BufferedReader(new FileReader(fileType))){
             String line;
@@ -72,26 +64,25 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
                 }
             }
             if(searchStringResult != null){
-                communicationWithTheUser.showMessege(searchStringResult);
-            } else communicationWithTheUser.showMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
+                beanFactory.getCommunicationWithTheUser().showMessege(searchStringResult);
+            } else beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
         }catch (IOException e){
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
         }
     }
 
 
     public void  makeEntryInDictionary(){
-        RequestFunctions requestFunctions = new RequestFunctions(communicationWithTheUser, checkFunctions);
-        String numDict = requestFunctions.promptDictionaryType();
+        String numDict = beanFactory.getRequestFunctions().promptDictionaryType();
         Path pathToFile = definePathToFile(numDict);
-        String expression = requestFunctions.requestExpressiont(numDict);
-        communicationWithTheUser.showMessege(MessegesForUser.REQUEST_VALUE.getMessege());
-        String expressionValue = requestFunctions.requestExpressionValue(numDict);
+        String expression = beanFactory.getRequestFunctions().requestExpressiont(numDict);
+        beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.REQUEST_VALUE.getMessege());
+        String expressionValue = beanFactory.getRequestFunctions().requestExpressionValue(numDict);
         String checkedString = expression + "\t" + expressionValue;
         try {
             Files.writeString(pathToFile, "\n" + checkedString, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_WRITING_ERROR.getMessege(),e);
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.FILE_WRITING_ERROR.getMessege(),e);
         }
     }
 
@@ -108,11 +99,11 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
     }
 
     public void  deleteEntryInDictionary(){
-        String dictionaryType = requestFunctions.promptDictionaryType();
+        String dictionaryType = beanFactory.getRequestFunctions().promptDictionaryType();
         File fileType = defineDictionaryType(dictionaryType);
         Path path = definePathToFile(dictionaryType);
-        File temporaryFile = new File(FilesInfo.DIRECTORY.getFilesInfo() + filesFactory.getSeparator() + FilesInfo.TEMP_FILE.getFilesInfo());
-        String searchString = requestFunctions.requestExpressiont(dictionaryType);
+        File temporaryFile = new File(FilesInfo.DIRECTORY.getFilesInfo() + beanFactory.getFilesFactory().getSeparator() + FilesInfo.TEMP_FILE.getFilesInfo());
+        String searchString = beanFactory.getRequestFunctions().requestExpressiont(dictionaryType);
         try{
             if(chekRowExistensBeforeDeleting(searchString,fileType)){
                 try ( BufferedWriter bw = new BufferedWriter(new FileWriter(temporaryFile));
@@ -126,15 +117,15 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
                         }
                     }
                     if (Files.deleteIfExists(path)) {
-                        communicationWithTheUser.showMessege(MessegesForUser.DELETE_OK.getMessege());
-                    } else communicationWithTheUser.showErrorMessege(MessegesForUser.DELETE_FAILED.getMessege());
+                        beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.DELETE_OK.getMessege());
+                    } else beanFactory.getCommunicationWithTheUser().showErrorMessege(MessegesForUser.DELETE_FAILED.getMessege());
                     if (temporaryFile.renameTo(fileType)) {
-                        communicationWithTheUser.showMessege(MessegesForUser.RENAME_OK.getMessege());
-                    } else communicationWithTheUser.showErrorMessege(MessegesForUser.RENAME_FAILED.getMessege());
-                } else communicationWithTheUser.showErrorMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
+                        beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.RENAME_OK.getMessege());
+                    } else beanFactory.getCommunicationWithTheUser().showErrorMessege(MessegesForUser.RENAME_FAILED.getMessege());
+                } else beanFactory.getCommunicationWithTheUser().showErrorMessege(MessegesForUser.STRING_NOT_FOUND.getMessege());
 
             }catch (IOException e){
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
+            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.FILE_READ_ERROR.getMessege(), e);
         }
     }
 }
