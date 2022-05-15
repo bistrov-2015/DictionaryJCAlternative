@@ -1,5 +1,4 @@
-/**
- * */
+/***/
 package main.java.logicImplementation;
 
 import java.io.File;

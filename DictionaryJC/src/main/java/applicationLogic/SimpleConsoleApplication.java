@@ -3,7 +3,7 @@
  * public void runApplication() - вызывает методы до тех пор пока переменная runAp = true;
  * public void showUserMenu() - метод реализует показ пользователю пунктов меню приложения;
  * public void  handleUserSelection() - метод реализует запрос действия от пользователя;
- * public void performSelectedAction() - метод обрабатывет выбор пользователя в зависимости от выбранного пункта меню.
+ * public void performSelectedAction() - метод обрабатывет выбор пользователя в зависимости от выбранного пункта меню
  * */
 package main.java.applicationLogic;
 

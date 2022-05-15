@@ -2,7 +2,7 @@
 * Данное перечисление содержит регулярные выражения,
 * которые используютя для проверки корректности ввода в соответствии с требованиями в техническом задании.
 * Перечисление используется в методах класса CheckFunctions.
-* SELECTION_FORMAT - определяет возможные для выбора пункты главного меню, метод showMenu class CommunicationWhithTheTheUser;
+* SELECTION_FORMAT - определяет возможные для выбора пункты главного меню, метод showMenu class CommunicationWhithTheTheUser.
 * AVAILABLE_DICTIONARY_NUMBER_FORMAT - определяет доступные для выбора номера словарей, метод checkDictionaryTypeSelection class CheckFunctions.
 * NUMERIC_EXPRESSION_FORMAT - определяет формат для ключа в словаре хранящем цифры, метод checkNumericString class CheckFunctions.
 * LANGUAGE_EXPRESSION_FORMAT - определяет формат для ключа в словаре хранящем цифры, метод checkSymbolString class CheckFunctions.
