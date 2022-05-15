@@ -5,14 +5,14 @@
 package main.java.logicImplementation;
 
 
-public enum Files {
+public enum FilesInfo {
     LANG_FILE("LanguageDictionary.txt"),
     NUM_FILE("NumericDictionary.txt"),
     TEMP_FILE("temp.txt"),
     DIRECTORY("C:");
     final String FileName;
 
-    Files(String FileName) {
+    FilesInfo(String FileName) {
         this.FileName = FileName;
     }
     public String getFilesInfo(){

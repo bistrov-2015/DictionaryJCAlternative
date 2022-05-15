@@ -23,11 +23,16 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
     private CheckFunctions checkFunctions;
     private RequestFunctions requestFunctions;
     private CommunicationWithTheUser communicationWithTheUser;
+    private FilesFactory filesFactory;
 
-    public SimpleConsoleApplicationIOMethods(CheckFunctions checkFunctions, RequestFunctions requestFunctions, CommunicationWithTheUser communicationWithTheUser) {
+    public SimpleConsoleApplicationIOMethods(CheckFunctions checkFunctions,
+                                             RequestFunctions requestFunctions,
+                                             CommunicationWithTheUser communicationWithTheUser,
+                                             FilesFactory filesFactory) {
         this.checkFunctions = checkFunctions;
         this.requestFunctions = requestFunctions;
         this.communicationWithTheUser = communicationWithTheUser;
+        this.filesFactory = filesFactory;
     }
 
     public void showDictionary(){
@@ -44,14 +49,14 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
 
     public File defineDictionaryType(String dictionaryType){// переменнjq fileType присваивается значение взависимости от того какой словарь выбран
         if("1".equals(dictionaryType)){
-            return checkFunctions.getFileLangDict();
-        } else return checkFunctions.getFileNumDict();
+            return filesFactory.getFileLangDict();
+        } else return filesFactory.getFileNumDict();
     }
 
     private Path definePathToFile(String numDict){// переменной path присваивается значение взависимости от того каой словарь выбран
         if("1".equals(numDict)){
-            return checkFunctions.getPathToLangFile();
-        } else return checkFunctions.getPathToNumFile();
+            return filesFactory.getPathToLangFile();
+        } else return filesFactory.getPathToNumFile();
     }
 
     public void  findEntryInDictionary(){
@@ -106,7 +111,7 @@ public class SimpleConsoleApplicationIOMethods implements DictionaryInterface {
         String dictionaryType = requestFunctions.promptDictionaryType();
         File fileType = defineDictionaryType(dictionaryType);
         Path path = definePathToFile(dictionaryType);
-        File temporaryFile = new File(main.java.logicImplementation.Files.DIRECTORY.getFilesInfo() + checkFunctions.getSeparator() + main.java.logicImplementation.Files.TEMP_FILE.getFilesInfo());
+        File temporaryFile = new File(FilesInfo.DIRECTORY.getFilesInfo() + filesFactory.getSeparator() + FilesInfo.TEMP_FILE.getFilesInfo());
         String searchString = requestFunctions.requestExpressiont(dictionaryType);
         try{
             if(chekRowExistensBeforeDeleting(searchString,fileType)){

@@ -1,5 +1,5 @@
 /**
- * Класс запукает приложение при помощи метода public void runApplication(), в котором у объекта simpleConsoleApplication вызывается метод runApplication() переопределённый в классе simpleConsoleApplication
+ * Класс запукает приложение при помощи метода public void runApplication(), в котором у объекта simpleConsoleApplication вызывается метод runApplication() переопределённый в классе SimpleConsoleApplication.
  * */
 package main.java.applicationLogic;
 

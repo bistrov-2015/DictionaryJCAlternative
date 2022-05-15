@@ -1,5 +1,5 @@
 /**
- * калсс реализует методы для общения с пользователем.
+ * Калсс реализует методы для общения с пользователем.
  * метод showMenu() - метод выводит в консоль главное меню приложения.
  * метод promptLine() - запрашивает у пользователя ввод строки.
  * метод showMessege() - выводит в консоль строку (сообщение).
@@ -21,8 +21,7 @@ public class CommunicationWithTheUser {
     public String promptLine(){
         Scanner scanner = new Scanner(System.in);
         showMessege(MessegesForUser.KEY_REQUEST.getMessege());
-        String line = scanner.nextLine();
-        return line;
+        return scanner.nextLine();
     }
 
     public void showMessege(String messege){
