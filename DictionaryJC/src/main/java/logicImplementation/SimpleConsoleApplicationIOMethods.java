@@ -1,7 +1,8 @@
 /**
  * класс реализует методы ввода/вывода:
  * public void showDictionary() - метод выводит в консоль выбранный пользователем словарь;
- * public File defineDictionaryType(String dictionaryType) - метод определят с каким файлом необходимо работать, взависимости от того какой словарь выбрал пользователь;
+ * public File defineDictionaryType(String dictionaryType) - метод определят с каким файлом необходимо работать,
+ * взависимости от того какой словарь выбрал пользователь;
  * public Path definePathtoFile(String numDict) - метод возвращает путь до выбранного файла;
  * public void  findEntryInDictionary() - метод поиска в словаре по ключу и по значению;
  * public void  makeEntryInDictionary() - метод реализующий запись в словарь;

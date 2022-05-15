@@ -1,3 +1,5 @@
+/**
+ * */
 package main.java.applicationLogic;
 
 import main.java.logicImplementation.*;

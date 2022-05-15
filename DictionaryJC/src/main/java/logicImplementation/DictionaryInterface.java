@@ -1,5 +1,5 @@
 /**
- * Данный интерфейс объявляет API словаря.
+ * Данный интерфейс объявляет API словаря
  * */
 package main.java.logicImplementation;
 
