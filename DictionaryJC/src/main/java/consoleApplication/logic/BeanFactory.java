@@ -1,11 +1,3 @@
-/**
- *  Данный класс отвечает за создание объектов всех классов проекта (в методе createObjects),
- *  методы getClassName (где ClassName - имя конкретного класса)
- *  возщврают объект класса (с именем ClassName).
- *  Метод start вызывает метод createObjects и у объекта класса ApplicationLogic вызывает метод runApplication,
- *  запуская консольное приложение.
- *  Метода getClassName() и start() реализуют открытый интерфейс класса BeanFactory;
- * */
 package main.java.consoleApplication.logic;
 
 import main.java.consoleApplication.implementation.dictionary.DictionaryInterface;
@@ -18,7 +10,16 @@ import main.java.consoleApplication.logic.application.ApplicationLogic;
 import main.java.consoleApplication.logic.application.SimpleConsoleApplication;
 import main.java.userInterface.CommunicationWithTheUser;
 
-public final class BeanFactory {
+/**
+ * Данный класс отвечает за создание объектов всех классов проекта (в методе createObjects),
+ * методы getClassName (где ClassName - имя конкретного класса)
+ * возщврают объект класса (с именем ClassName).
+ * Метод start вызывает метод createObjects и у объекта класса ApplicationLogic вызывает метод runApplication,
+ * запуская консольное приложение.
+ * Метода getClassName() и start() реализуют открытый интерфейс класса BeanFactory;
+ */
+
+public  class BeanFactory {
     private CommunicationWithTheUser communicationWithTheUser;
     private FilesFactory filesFactory;
     private CheckFunctions checkFunctions;
@@ -27,7 +28,7 @@ public final class BeanFactory {
     private ApplicationInterface simpleConsoleApplication;
     private ApplicationLogic applicationLogic;
 
-    private void createObjects(BeanFactory beanFactory){
+    private void createObjects(BeanFactory beanFactory) {
         communicationWithTheUser = new CommunicationWithTheUser();
         filesFactory = new FilesFactory();
         checkFunctions = new CheckFunctions(beanFactory);
@@ -61,7 +62,7 @@ public final class BeanFactory {
         return communicationWithTheUser;
     }
 
-    protected void start(BeanFactory beanFactory){
+    protected void start(BeanFactory beanFactory) {
         createObjects(beanFactory);
         applicationLogic.runApplication();
     }

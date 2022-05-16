@@ -1,3 +1,8 @@
+package main.java.consoleApplication.implementation.functions;
+
+import main.java.consoleApplication.logic.BeanFactory;
+import main.java.userInterface.MessegesForUser;
+
 /**
  * Класс реализует методы запроса данных у пользователя:
  * public String promptUserSelection() - запрос пункта меню;
@@ -5,18 +10,12 @@
  * public String requestExpressiont(String numDict) - метод запроса слова(ключа) для словаря
  * и проверка его на удовлетвореня условиям ТЗ для конкретного словаря, в зависимости от того какой словарь выбран;
  * public String requestExpressionValue(String numDict) - метод запроса слова(значения) для словаря и проверка его на удовлетвореня условиям ТЗ для конкретного словаря, в зависимости от того какой словарь выбран;
- *  */
-package main.java.consoleApplication.implementation.functions;
-
-import main.java.consoleApplication.logic.BeanFactory;
-import main.java.userInterface.MessegesForUser;
-
-import java.util.Scanner;
+ */
 
 public class RequestFunctions {
     private String numDict;
     private String selectItem;
-    private BeanFactory beanFactory;
+    private final BeanFactory beanFactory;
 
     public RequestFunctions(BeanFactory beanFactory) {
         this.beanFactory = beanFactory;
@@ -30,7 +29,7 @@ public class RequestFunctions {
         this.selectItem = selectItem;
     }
 
-    public String promptUserSelection(){
+    public String promptUserSelection() {
         beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.REQUEST_ACTION.getMessege());
         setSelectItem(beanFactory.getObjectCommunicationWithTheUser().readLine());
         if (!beanFactory.getObjectCheckFunctions().checkUserSelection(selectItem)) {
@@ -39,7 +38,7 @@ public class RequestFunctions {
         return selectItem;
     }
 
-    public String promptDictionaryType(){
+    public String promptDictionaryType() {
         beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.PROMPT_DICTIOARY_TYPE.getMessege());
         setNumDict(beanFactory.getObjectCommunicationWithTheUser().readLine());
         if (!beanFactory.getObjectCheckFunctions().checkDictionaryTypeSelection(numDict)) {
@@ -48,34 +47,38 @@ public class RequestFunctions {
         return numDict;
     }
 
-    public String requestExpressiont(String numDict){
+    public String requestExpressiont(String numDict) {
         String stringToFile = beanFactory.getObjectCommunicationWithTheUser().promptLine();
 
-        if("1".equals(numDict)){
-            while (!beanFactory.getObjectCheckFunctions().checkSymbolString(stringToFile)){
-                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.SHOW_STRING_FORMAT_FOR_EXPRESSION_MESSEGE.getMessege());//showStringFormatForExpression();
+        if ("1".equals(numDict)) {
+            while (!beanFactory.getObjectCheckFunctions().checkSymbolString(stringToFile)) {
+                beanFactory.getObjectCommunicationWithTheUser()
+                        .showMessege(MessegesForUser.SHOW_STRING_FORMAT_FOR_EXPRESSION_MESSEGE.getMessege());
                 stringToFile = beanFactory.getObjectCommunicationWithTheUser().promptLine();
             }
-        }else if ("2".equals(numDict)){
-            while (!beanFactory.getObjectCheckFunctions().checkNumericString(stringToFile)){
-                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.SHOW_NUMBER_FORMAT_FOR_EXPRESSION_MESSEGE.getMessege());//showNumberFormatForExpression();
+        } else if ("2".equals(numDict)) {
+            while (!beanFactory.getObjectCheckFunctions().checkNumericString(stringToFile)) {
+                beanFactory.getObjectCommunicationWithTheUser()
+                        .showMessege(MessegesForUser.SHOW_NUMBER_FORMAT_FOR_EXPRESSION_MESSEGE.getMessege());
                 stringToFile = beanFactory.getObjectCommunicationWithTheUser().promptLine();
             }
         }
         return stringToFile;
     }
 
-    public String requestExpressionValue(String numDict){
+    public String requestExpressionValue(String numDict) {
         String stringToFile = beanFactory.getObjectCommunicationWithTheUser().promptLine();
 
-        if("1".equals(numDict)){
-            while (!beanFactory.getObjectCheckFunctions().checkSymbolExpressionValue(stringToFile)){
-                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.SHOW_STRING_FORMAT_FOR_VALUE_MESSEGE.getMessege());//showStringFormatForExpressionValue();
+        if ("1".equals(numDict)) {
+            while (!beanFactory.getObjectCheckFunctions().checkSymbolExpressionValue(stringToFile)) {
+                beanFactory.getObjectCommunicationWithTheUser()
+                        .showMessege(MessegesForUser.SHOW_STRING_FORMAT_FOR_VALUE_MESSEGE.getMessege());
                 stringToFile = beanFactory.getObjectCommunicationWithTheUser().promptLine();
             }
-        }else if ("2".equals(numDict)){
-            while (!beanFactory.getObjectCheckFunctions().checkNumericExpressionValue(stringToFile)){
-                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.SHOW_NUMBER_FORMAT_FOR_VALUE_MESSEGE.getMessege());//showNumberFormatForExpressionValue();
+        } else if ("2".equals(numDict)) {
+            while (!beanFactory.getObjectCheckFunctions().checkNumericExpressionValue(stringToFile)) {
+                beanFactory.getObjectCommunicationWithTheUser()
+                        .showMessege(MessegesForUser.SHOW_NUMBER_FORMAT_FOR_VALUE_MESSEGE.getMessege());
                 stringToFile = beanFactory.getObjectCommunicationWithTheUser().promptLine();
             }
         }
