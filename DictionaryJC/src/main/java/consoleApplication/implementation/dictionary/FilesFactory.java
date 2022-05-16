@@ -1,5 +1,5 @@
 /***/
-package main.java.logicImplementation;
+package main.java.consoleApplication.implementation.dictionary;
 
 import java.io.File;
 import java.nio.file.Path;

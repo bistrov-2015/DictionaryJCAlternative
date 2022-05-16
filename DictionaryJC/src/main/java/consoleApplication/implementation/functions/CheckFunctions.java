@@ -8,11 +8,10 @@
  * public boolean checkSymbolExpressionValue(String chekedStr) - функция проверяет соответствие введённого пользователем значения для слолваря хранящего слова из латинских букв;
  * public boolean checkNumericExpressionValue(String chekedStr) - функция проверяет соответствие введённого пользователем значения для слолваря хранящего чвисла
  * */
-package main.java.logicImplementation;
+package main.java.consoleApplication.implementation.functions;
 
-import main.java.applicationLogic.BeanFactory;
+import main.java.consoleApplication.logic.BeanFactory;
 import main.java.userInterface.MessegesForUser;
-import main.java.userInterface.CommunicationWithTheUser;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,19 +25,19 @@ public class CheckFunctions {
     }
     public void checkFileExistence() {
         try {
-            File langDictFile = new File(String.valueOf(beanFactory.getFilesFactory().getPathToLangFile()));
+            File langDictFile = new File(String.valueOf(beanFactory.getObjectFilesFactory().getPathToLangFile()));
             if (langDictFile.createNewFile())
-                beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
+                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
         } catch (IOException e) {
-            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportLanguageDictionaryFileCreationFailed();
+            beanFactory.getObjectCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportLanguageDictionaryFileCreationFailed();
         }
         try {
-            File numDictFile = new File(String.valueOf(beanFactory.getFilesFactory().getPathToNumFile()));
+            File numDictFile = new File(String.valueOf(beanFactory.getObjectFilesFactory().getPathToNumFile()));
             if (numDictFile.createNewFile())
-                beanFactory.getCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
+                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
 
         } catch (IOException e) {
-            beanFactory.getCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportNumericDictionaryFileCreationFailed();
+            beanFactory.getObjectCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportNumericDictionaryFileCreationFailed();
         }
     }
 

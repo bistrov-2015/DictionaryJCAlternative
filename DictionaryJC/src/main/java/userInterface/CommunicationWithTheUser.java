@@ -10,18 +10,18 @@
 
 package main.java.userInterface;
 
+import java.io.File;
 import java.util.Scanner;
 
-public class CommunicationWithTheUser {
+public class CommunicationWithTheUser implements UserInterface {
 
     public void showMenu(){
         System.out.println(MessegesForUser.MAINMENU.getMessege());
     }
 
     public String promptLine(){
-        Scanner scanner = new Scanner(System.in);
         showMessege(MessegesForUser.KEY_REQUEST.getMessege());
-        return scanner.nextLine();
+        return  readLine();
     }
 
     public void showMessege(String messege){
@@ -34,5 +34,18 @@ public class CommunicationWithTheUser {
 
     public void showExeptionMessege(String messege, Exception e){
         System.out.println(messege + e);
+    }
+    public void showExeptionMessege(String messege, File file, Exception e){
+        System.out.println(messege + file + e);
+    }
+    public String readLine(){
+        String result;
+        try {
+            result = System.console().readLine();
+        }catch (NullPointerException e){
+            Scanner scanner = new Scanner(System.in);
+            result = scanner.nextLine();
+        }
+         return result;
     }
 }

@@ -1,7 +1,7 @@
 /**
  * Данный интерфейс объявляет API словаря.
  * */
-package main.java.logicImplementation;
+package main.java.consoleApplication.implementation.dictionary;
 
 public interface DictionaryInterface {
     void showDictionary();

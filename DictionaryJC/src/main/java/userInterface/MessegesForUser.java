@@ -25,6 +25,7 @@ public enum MessegesForUser {
     RENAME_OK("and save;\n"),
     DELETE_FAILED("Word wasn't deleted "),
     ERROR("Ошибка! "),
+    FILE_NOT_FOUND("Не найден файл, или передан null в параметры метода. Ожидался - "),
     RENAME_FAILED("temporary file wasnn't rename C:/temporaryFile.txt;\n");
     final String messege;
 

@@ -9,7 +9,7 @@
 * NUMERIC_VALUE_FORMAT - определяет формат для значения ключа в словаре хранящем цифры, метод checkNumericExpressionValue class CheckFunctions.
 * SYMBOL_VALUE_FORMAT - определяет формат для значения ключа в словаре хранящем цифры, метод checkSymbolExpressionValue class CheckFunctions.
 * */
-package main.java.logicImplementation;
+package main.java.consoleApplication.implementation.functions;
 
 public enum Rejex {
     SELECTION_FORMAT("[12345]"),

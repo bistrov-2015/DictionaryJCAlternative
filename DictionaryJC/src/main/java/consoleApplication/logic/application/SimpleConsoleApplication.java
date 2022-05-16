@@ -5,13 +5,10 @@
  * public void  handleUserSelection() - метод реализует запрос действия от пользователя;
  * public void performSelectedAction() - метод обрабатывет выбор пользователя в зависимости от выбранного пункта меню
  * */
-package main.java.applicationLogic;
+package main.java.consoleApplication.logic.application;
 
+import main.java.consoleApplication.logic.BeanFactory;
 import main.java.userInterface.MenuItems;
-import main.java.logicImplementation.DictionaryInterface;
-import main.java.userInterface.CommunicationWithTheUser;
-import main.java.logicImplementation.CheckFunctions;
-import main.java.logicImplementation.RequestFunctions;
 
 public class SimpleConsoleApplication implements ApplicationInterface {
     private String selectedItem;
@@ -34,7 +31,7 @@ public class SimpleConsoleApplication implements ApplicationInterface {
 
 
     public void runApplication(){
-        beanFactory.getCheckFunctions().checkFileExistence();
+        beanFactory.getObjectCheckFunctions().checkFileExistence();
         setRunUp(true);
         while (getRunAp()) {
             showUserMenu();
@@ -44,22 +41,22 @@ public class SimpleConsoleApplication implements ApplicationInterface {
     }
 
     public void showUserMenu(){
-        beanFactory.getCommunicationWithTheUser().showMenu();
+        beanFactory.getObjectCommunicationWithTheUser().showMenu();
     }
 
     public void  handleUserSelection(){
-        setSelectedItem(beanFactory.getRequestFunctions().promptUserSelection());
+        setSelectedItem(beanFactory.getObjectRequestFunctions().promptUserSelection());
     }
 
     public void performSelectedAction(){
         if(selectedItem.equals(MenuItems.SHOW_ALL.getMenuItem())){
-                beanFactory.getSimpleConsoleApplicationIOMethods().showDictionary();
+                beanFactory.getObjectSimpleConsoleApplicationIOMethods().showDictionary();
         } else if(selectedItem.equals(MenuItems.FIND.getMenuItem())){
-                beanFactory.getSimpleConsoleApplicationIOMethods().findEntryInDictionary();
+                beanFactory.getObjectSimpleConsoleApplicationIOMethods().findEntryInDictionary();
         } else if(selectedItem.equals(MenuItems.ADD.getMenuItem())){
-                beanFactory.getSimpleConsoleApplicationIOMethods().makeEntryInDictionary();
+                beanFactory.getObjectSimpleConsoleApplicationIOMethods().makeEntryInDictionary();
         } else if(selectedItem.equals(MenuItems.DELETE.getMenuItem())){
-                beanFactory.getSimpleConsoleApplicationIOMethods().deleteEntryInDictionary();
+                beanFactory.getObjectSimpleConsoleApplicationIOMethods().deleteEntryInDictionary();
         } else if (selectedItem.equals(MenuItems.EXIT.getMenuItem())){
             setRunUp(false);
         }
