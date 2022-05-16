@@ -2,10 +2,13 @@
  * Калсс реализует методы для общения с пользователем.
  * метод showMenu() - метод выводит в консоль главное меню приложения.
  * метод promptLine() - запрашивает у пользователя ввод строки.
+ * метод readLine() - считывает строку так, чтобы не возникало проблем с кодировкой.
  * метод showMessege() - выводит в консоль строку (сообщение).
  * метод showErrorMessege() - вывод сообщения об ошибке в консоль. Принимает в качестве параметра константу со строкой из перечисления MessegesForUser.
- * метод showExeptionMessege - вывод в консоль сообщения об исключении. Принимает два параметра:
+ * метод showExeptionMessege(String messege, Exception e) - вывод в консоль сообщения об исключении. Принимает два параметра:
  * первый - константа со строкой из перечисления MessegesForUser, второй - конкретный Exception.
+ * метод showExeptionMessege(String messege, File file, Exception e) - - вывод в консоль сообщения об исключении при работе с файлом. Принимает три параметра:
+ * первый - константа со строкой из перечисления MessegesForUser, второй - переменная типа File, третий - конкретный Exception.
  * */
 
 package main.java.userInterface;
@@ -13,7 +16,7 @@ package main.java.userInterface;
 import java.io.File;
 import java.util.Scanner;
 
-public class CommunicationWithTheUser implements UserInterface {
+public class CommunicationWithTheUser implements CommunicationWhitUserInterface {
 
     public void showMenu(){
         System.out.println(MessegesForUser.MAINMENU.getMessege());
