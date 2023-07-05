@@ -1,3 +1,12 @@
+package main.java.consoleApplication.implementation.functions;
+
+import main.java.consoleApplication.logic.BeanFactory;
+import main.java.userInterface.MessegesForUser;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.regex.Pattern;
+
 /**
  * класс реализующий методы проверки:
  * public void checkFileExistence() - проверка существования файла по заданному пути, если его нет файл будет создан;
@@ -7,51 +16,37 @@
  * public boolean checkSymbolString(String chekedStr) - функция проверяет соответствие введённой пользователем строки для слолваря хранящего слова из латинских букв;
  * public boolean checkSymbolExpressionValue(String chekedStr) - функция проверяет соответствие введённого пользователем значения для слолваря хранящего слова из латинских букв;
  * public boolean checkNumericExpressionValue(String chekedStr) - функция проверяет соответствие введённого пользователем значения для слолваря хранящего чвисла
- * */
-package main.java.logicImplementation;
-
-import main.java.userInterface.MessegesForUser;
-import main.java.userInterface.CommunicationWithTheUser;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.regex.Pattern;
-
+ */
 public class CheckFunctions {
+    private final BeanFactory beanFactory;
 
-    private CommunicationWithTheUser communicationWithTheUser;
-    private FilesFactory filesFactory;
-
-    public CheckFunctions(CommunicationWithTheUser communicationWithTheUser, FilesFactory filesFactory) {
-        this.communicationWithTheUser = communicationWithTheUser;
-        this.filesFactory = filesFactory;
+    public CheckFunctions(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
-
-
 
     public void checkFileExistence() {
         try {
-            File langDictFile = new File(String.valueOf(filesFactory.getPathToLangFile()));
+            File langDictFile = new File(String.valueOf(beanFactory.getObjectFilesFactory().getPathToLangFile()));
             if (langDictFile.createNewFile())
-                communicationWithTheUser.showMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
+                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION.getMessege());//reportLanguageDictionaryFileCreation();
         } catch (IOException e) {
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportLanguageDictionaryFileCreationFailed();
+            beanFactory.getObjectCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_LANGUAGE_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportLanguageDictionaryFileCreationFailed();
         }
         try {
-            File numDictFile = new File(String.valueOf(filesFactory.getPathToNumFile()));
+            File numDictFile = new File(String.valueOf(beanFactory.getObjectFilesFactory().getPathToNumFile()));
             if (numDictFile.createNewFile())
-                communicationWithTheUser.showMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
+                beanFactory.getObjectCommunicationWithTheUser().showMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION.getMessege());//reportNumericDictionaryFileCreation();
 
         } catch (IOException e) {
-            communicationWithTheUser.showExeptionMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportNumericDictionaryFileCreationFailed();
+            beanFactory.getObjectCommunicationWithTheUser().showExeptionMessege(MessegesForUser.REPORT_NUMERIC_DICTIONARY_FILE_CREATION_FAILED.getMessege(), e);//reportNumericDictionaryFileCreationFailed();
         }
     }
 
-    public boolean checkUserSelection(String userSelection){
+    public boolean checkUserSelection(String userSelection) {
         return Pattern.matches(Rejex.SELECTION_FORMAT.getRejexType(), userSelection);
     }
 
-    public boolean checkDictionaryTypeSelection(String Dict){
+    public boolean checkDictionaryTypeSelection(String Dict) {
         return Pattern.matches(Rejex.AVAILABLE_DICTIONARY_NUMBER_FORMAT.getRejexType(), Dict);
     }
 

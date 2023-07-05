@@ -1,7 +1,8 @@
+package main.java.userInterface;
+
 /**
  * Данное перечисление содержит константы с пунктами меню, обозначающими определённое действие для главного меню.
-**/
-package main.java.userInterface;
+ **/
 
 public enum MenuItems {
     SHOW_ALL("1"),
@@ -11,10 +12,11 @@ public enum MenuItems {
     EXIT("5");
     String menuItem;
 
-    MenuItems(String menuItem){
+    MenuItems(String menuItem) {
         this.menuItem = menuItem;
     }
-    public String getMenuItem(){
+
+    public String getMenuItem() {
         return menuItem;
     }
 }
